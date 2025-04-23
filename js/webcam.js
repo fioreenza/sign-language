@@ -113,7 +113,7 @@ async function predictWebcam() {
 
     canvasCtx.restore();
 
-    if (results.gestures.length > 0 && results.gestures[0][0].score >= 0.8) {
+    if (results.gestures.length > 0 && results.gestures[0][0].score >= 0.7) {
         gestureOutput.style.display = "block";
         const gesture = results.gestures[0][0];
         const handedness = results.handednesses[0][0].displayName;
