@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-time Sign Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gradient-to-b from-slate-100 to-slate-300 text-slate-800 h-screen flex flex-col justify-center items-center">
+      <section class="bg-white w-3/5 p-8 rounded-2xl shadow-lg text-center">
+        <h1 class="text-3xl font-bold mb-4">Real-time Sign Detection</h1>
+
+        <div class="relative w-full max-w-[480px] mx-auto aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200 shadow">
+          <video id="webcam" autoplay playsinline class="w-full h-full object-cover bg-slate-200 rounded-2xl transform scale-x-[-1]"></video>
+          <canvas id="output_canvas" width="480" height="320" class="absolute top-0 left-0 w-full h-full transform scale-x-[-1] pointer-events-none"></canvas>
+          <div id="loadingIndicator" class="absolute inset-0 flex items-center justify-center bg-white/70 text-blue-600 font-semibold text-lg">
+            Loading camera...
+          </div>
+        </div>
+
+        <div id="gesture_output" class="mt-4 text-lg font-semibold text-gray-700">
+        </div>
+
+        <div class="mt-6 flex justify-center gap-4">
+          <button id="webcamButton" class="bg-blue-700 text-white font-medium py-3 px-8 rounded-xl hover:bg-blue-500 transition transform hover:-translate-y-0.5 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:transform-none">
+            Enable Camera
+          </button>
+        </div>
+      </section>
+
+    <script type="module" src="./js/webcam.js"></script>
+  </body>
+</html>
