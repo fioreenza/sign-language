@@ -231,9 +231,13 @@ async function predictWebcam() {
                     lastDetectedObject = objectClass; 
 
                     const [x, y, width, height] = prediction.bbox;
-                    canvasCtx.strokeStyle = "#FFA500"; // Orange
+                    canvasCtx.strokeStyle = "#FFA500"; 
                     canvasCtx.lineWidth = 2;
                     canvasCtx.strokeRect(x, y, width, height);
+
+                    canvasCtx.fillStyle = "#FFA500"; 
+                    canvasCtx.font = "16px Arial";
+                    canvasCtx.fillText(`${objectClass} - ${parseFloat(score * 100).toFixed(2)}%`, x, y > 10 ? y - 5 : 10);
                 }
             });
     
