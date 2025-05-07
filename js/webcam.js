@@ -119,6 +119,8 @@ objectButton.addEventListener("click", () => {
     gestureOutput.style.display = "none"; 
 });
 
+const textInput = document.getElementById("textInput");
+
 function generateSignImagesFromText(text) {
     const container = document.getElementById("signImagesContainer");
     container.innerHTML = ""; 
@@ -144,8 +146,14 @@ document.getElementById("generateSign").addEventListener("click", () => {
         console.log(lastDetectedObject)
     }
 
-    generateSignImagesFromText(lastDetectedObject);
-});
+    if (textInput.value === "") {
+        alert("Please enter a text to generate sign images.");
+    } else {
+        const text = textInput.value;
+        generateSignImagesFromText(text);
+    }
+    textInput.value = "";
+})
 
 async function predictWebcam() {
     canvasElement.style.width = '100%';
@@ -190,10 +198,9 @@ async function predictWebcam() {
     if (mode === "gesture") {
         if (results.gestures.length > 0 && results.gestures[0][0].score >= 0.7) {
             const gesture = results.gestures[0][0];
-            const handedness = results.handednesses[0][0].displayName;
             const categoryName = gesture.categoryName;
             const categoryScore = parseFloat(gesture.score * 100).toFixed(2);
-            gestureOutput.innerText = `Detected Gesture: ${categoryName}\nConfidence: ${categoryScore} - Hand: ${handedness}`;
+            gestureOutput.innerText = `Detected Gesture: ${categoryName}\nConfidence: ${categoryScore}`;
             if (results.landmarks && results.landmarks.length > 0) {
                 const indexFingerTip = results.landmarks[0][8]; // titik ujung jari telunjuk
                 const x = indexFingerTip.x * canvasElement.width;
@@ -238,6 +245,20 @@ async function predictWebcam() {
                     canvasCtx.fillStyle = "#FFA500"; 
                     canvasCtx.font = "16px Arial";
                     canvasCtx.fillText(`${objectClass} - ${parseFloat(score * 100).toFixed(2)}%`, x, y > 10 ? y - 5 : 10);
+
+                    const cleanText = lastDetectedObject.toLowerCase().replace(/[^a-z]/g, "");
+                    const baseX = x 
+                    const baseY = y 
+
+                    // Display image for each character in lastDetectedObject
+                    for (let i = 0; i < cleanText.length; i++) {
+                        const char = cleanText[i].toUpperCase();
+                        const offsetX = i * 65; 
+                        const img = new Image();
+                        img.src = `./image/${char}.png`;  // Path to your image files
+                        img.alt = char;
+                        canvasCtx.drawImage(img, baseX + offsetX, baseY, 60, 90); 
+                    }
                 }
             });
     
